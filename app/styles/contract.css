@@ -1,0 +1,224 @@
+/*
+  VERTRAG zwischen Templates und Stil-Presets (docs/superpowers/specs/2026-09-20-stil-presets-design.md).
+  Hier stehen KEINE Stilwerte – nur Rollen, die Variablen lesen. Die Werte liefert app/styles/<id>/style.css.
+  Custom Properties lösen dort auf, wo sie deklariert sind: Alles hier steht auf :root, also auf demselben Element
+  wie der Preset-Block :root[data-style="…"].
+*/
+
+/* Gemeinsame Aliase: bei jedem Preset gleich, deshalb nicht Teil der Preset-Dateien */
+:root {
+  --brand: var(--theme-brand);                 /* die Markenfläche: exakt die Eingabe */
+  --card: var(--theme-card);
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --secondary-foreground: var(--foreground);
+  --accent-foreground: var(--foreground);
+  --chart-1: var(--primary);
+  --chart-2: var(--signal);
+  --chart-3: oklch(0.78 0.15 85);              /* Tram-Gelb aus der Bildwelt */
+  --chart-4: var(--input);
+  --chart-5: var(--ink-muted);
+  --sidebar: var(--card);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+/*
+  FLÄCHENARTEN. Jede überschreibt die Tokens in ihrem Scope (Prinzip wie .dark), damit darin text-muted-foreground,
+  Linien, Fokusring, Primär-Button und Signal automatisch stimmen. Keine hellen Karten in dunkle Flächen setzen.
+  --surface-bg: die Farbe der Fläche selbst, für Elemente, die ein "Loch" in der Flächenfarbe brauchen (Halte im Linienband).
+*/
+@utility surface-ink {
+  --foreground: var(--ink-foreground);
+  --muted-foreground: var(--ink-muted);
+  --border: var(--ink-border);
+  --ring: var(--ink-foreground);
+  --primary: var(--ink-action);
+  --primary-foreground: var(--ink-action-foreground);
+  --signal: var(--signal-on-dark);
+  --surface-bg: var(--ink);
+  background-color: var(--ink);
+  color: var(--ink-foreground);
+}
+
+@utility surface-brand {
+  --foreground: var(--brand-foreground);
+  --muted-foreground: var(--brand-muted);
+  --border: var(--brand-border);
+  --ring: var(--brand-foreground);
+  --primary: var(--brand-action);
+  --primary-foreground: var(--brand-action-foreground);
+  --signal: var(--signal-on-brand);
+  --surface-bg: var(--brand);
+  background-color: var(--brand);
+  color: var(--brand-foreground);
+}
+
+/* Helle bzw. neutrale Fläche: keine Token-Überschreibung, nur die Fläche */
+@utility surface-plain {
+  --surface-bg: var(--card);
+  background-color: var(--card);
+  color: var(--foreground);
+}
+
+/*
+  FLÄCHENROLLEN sind reine Hook-Klassen in den Templates: surface-header, surface-footer, surface-board,
+  surface-highlight, tile-featured. Jedes Preset ordnet sie in seiner style.css einer Flächenart zu:
+    :root[data-style="x"] .surface-header { @apply surface-brand; }
+
+  Weitere Hook-Klassen ohne Regel hier, nur zum Anfassen für die Presets: board-head, board-cols, board-foot
+  (Teile der Tafel) und badge-dot (der Punkt im Top-Job-Badge). badge-dot bekommt bewusst KEINE Regel:
+  Normalerweise trägt der Punkt bg-signal, und das löst auch innerhalb gescopter Flächen richtig auf. Nur
+  Presets, in denen die Signalfarbe zugleich die Aktionsfarbe ist (der Punkt also auf dem gleichfarbigen
+  Badge verschwindet), setzen ihn in ihrer style.css um.
+*/
+
+/* TYPO-ROLLEN (1:1 die Rollentabelle im Konzept). Maximalbreiten bleiben im Template. */
+@utility type-h1 {
+  font-family: var(--style-font-heading);
+  font-weight: var(--heading-weight);
+  font-stretch: var(--heading-stretch);
+  text-transform: var(--heading-transform);
+  font-size: var(--type-h1-size);
+  line-height: var(--type-h1-leading);
+  letter-spacing: var(--type-h1-tracking);
+}
+@utility type-h1-page {
+  font-family: var(--style-font-heading);
+  font-weight: var(--heading-weight);
+  font-stretch: var(--heading-stretch);
+  text-transform: var(--heading-transform);
+  font-size: var(--type-h1-page-size);
+  line-height: var(--type-h1-page-leading);
+  letter-spacing: var(--type-h1-page-tracking);
+}
+@utility type-h2 {
+  font-family: var(--style-font-heading);
+  font-weight: var(--heading-weight);
+  font-stretch: var(--heading-stretch);
+  text-transform: var(--heading-transform);
+  font-size: var(--type-h2-size);
+  line-height: var(--type-h2-leading);
+  letter-spacing: var(--type-h2-tracking);
+}
+@utility type-h3-lg {
+  font-family: var(--style-font-heading);
+  font-weight: var(--heading-weight);
+  font-stretch: var(--heading-stretch);
+  text-transform: var(--heading-transform);
+  font-size: var(--type-h3-lg-size);
+  line-height: var(--type-h3-lg-leading);
+  letter-spacing: var(--type-h3-lg-tracking);
+}
+@utility type-h3 {
+  font-family: var(--style-font-heading);
+  font-weight: var(--heading-weight);
+  font-stretch: var(--heading-stretch);
+  text-transform: var(--heading-transform);
+  font-size: var(--type-h3-size);
+  line-height: var(--type-h3-leading);
+  letter-spacing: var(--type-h3-tracking);
+}
+/* Titel in Kästen (Tafel, "Auf einen Blick"): Größe wie H3, eigene Zeilenhöhe */
+@utility type-box-title {
+  font-family: var(--style-font-heading);
+  font-weight: var(--heading-weight);
+  font-stretch: var(--heading-stretch);
+  text-transform: var(--heading-transform);
+  font-size: var(--type-h3-size);
+  line-height: var(--type-box-title-leading);
+  letter-spacing: var(--type-h3-tracking);
+}
+@utility type-lead {
+  font-size: var(--type-lead-size);
+  line-height: var(--type-lead-leading);
+}
+/* Kennzahlen */
+@utility type-figure {
+  font-family: var(--style-font-figure);
+  font-weight: var(--figure-weight);
+  font-stretch: var(--heading-stretch);
+  font-size: var(--type-figure-size);
+  line-height: 1;
+}
+@utility type-figure-sm {
+  font-family: var(--style-font-figure);
+  font-weight: var(--figure-weight);
+  font-stretch: var(--heading-stretch);
+  font-size: var(--type-h3-lg-size);
+  line-height: 1.2;
+}
+/* Zellen der Tafel: bewusst ohne line-height (erbt vom body).
+   Die Größe kommt aus dem Preset: Die Spalte ist schmal, und Display-Schriften bauen
+   unterschiedlich breit – eine breite Grotesk braucht hier eine Stufe weniger als eine schmale. */
+@utility type-board {
+  font-family: var(--style-font-figure);
+  font-weight: var(--board-weight);
+  font-stretch: var(--heading-stretch);
+  font-size: var(--type-board-size);
+}
+@utility type-wordmark {
+  font-family: var(--style-font-heading);
+  font-weight: var(--heading-weight);
+  font-stretch: var(--heading-stretch);
+  text-transform: var(--heading-transform);
+  font-size: 1.25rem;
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+}
+
+@layer components {
+  /* KACHEL: Fläche, Kante ODER Schatten – das Preset entscheidet. Hover-Kante immer in der (gescopten) Aktionsfarbe. */
+  .tile {
+    padding: var(--tile-padding);
+    background-color: var(--tile-bg);
+    color: var(--tile-fg);
+    border-style: solid;
+    border-width: var(--tile-border-width);
+    border-color: var(--tile-border-color);
+    box-shadow: var(--tile-shadow);
+    transition: border-color 200ms ease-out, box-shadow 200ms ease-out, background-color 200ms ease-out;
+  }
+  .tile:hover {
+    border-color: var(--primary);
+    box-shadow: var(--tile-hover-shadow);
+  }
+
+  /* TAFEL: die eine orchestrierte Bewegung. --row setzt DepartureBoard.vue je Zeile (0, 1, 2 …). */
+  .board-row {
+    animation: var(--board-row-animation);
+    animation-delay: calc(150ms + var(--row, 0) * var(--board-row-stagger));
+    transform-origin: top center;
+  }
+
+  /*
+    "Bewegung reduzieren" muss auch gegen die Presets gelten. Deren Regeln stehen ungeschichtet und schlagen
+    deshalb jede Regel aus @layer components – auch diese Schutzregel. Wichtige Deklarationen in einem Layer
+    schlagen umgekehrt jede ungeschichtete normale Deklaration, darum hier !important.
+  */
+  @media (prefers-reduced-motion: reduce) {
+    .tile {
+      transition: none !important;
+    }
+    .board-row {
+      animation: none !important;
+    }
+  }
+}
+
+/* Fallblattanzeige */
+@keyframes board-flip {
+  from { opacity: 0; transform: perspective(40rem) rotateX(-75deg); }
+  to { opacity: 1; transform: perspective(40rem) rotateX(0); }
+}
+/* ruhiges Einblenden */
+@keyframes board-fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}

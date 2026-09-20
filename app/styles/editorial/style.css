@@ -1,0 +1,149 @@
+/*
+  PRESET "Editorial" – Konzept: app/styles/editorial/konzept.md
+  Eine Druckfarbe: Brand und Signal sind dieselbe Eingabe. Neutrale mit festem kühlen Farbton ("kaltes Papier").
+  Nachrechnen: node scripts/contrast.mjs --style editorial   (Rezept: scripts/style-recipes.mjs, gleiche L/C-Werte wie hier)
+*/
+:root[data-style="editorial"] {
+  /* --- Eingaben --- */
+  --theme-brand: #8c1c2b;
+  --theme-signal: #8c1c2b;
+  --theme-card: oklch(0.995 0.002 250);
+  --radius: 0.125rem;
+
+  --primary: color(from var(--theme-brand) xyz-d65 calc(x * min(1, 0.13 / y)) calc(y * min(1, 0.13 / y)) calc(z * min(1, 0.13 / y)));
+  --signal: color(from var(--theme-signal) xyz-d65 calc(x * min(1, 0.22 / y)) calc(y * min(1, 0.22 / y)) calc(z * min(1, 0.22 / y)));
+  --signal-on-dark: color(from var(--theme-signal) xyz-d65 calc(x * max(1, 0.19 / y)) calc(y * max(1, 0.19 / y)) calc(z * max(1, 0.19 / y)));
+  --signal-on-brand: var(--brand-foreground);                      /* Signal = Brand: aufgehellt schafft es auf dem Ochsenblut nur 2.07 zu 1, deshalb die helle Textfarbe der Fläche */
+
+  /* --- Neutrale: kaltes Papier, fester Farbton 250 --- */
+  --background: oklch(0.975 0.003 250);
+  --foreground: oklch(0.2 0.01 250);
+  --primary-foreground: oklch(0.985 0.003 250);
+  --secondary: oklch(0.945 0.004 250);
+  --muted: oklch(0.955 0.004 250);
+  --muted-foreground: oklch(0.45 0.01 250);
+  --accent: oklch(0.94 0.005 250);
+  --destructive: oklch(0.5 0.13 60);                               /* Braunorange: die Aktionsfarbe ist schon rot */
+  --border: oklch(0.86 0.004 250);
+  --input: oklch(0.58 0.008 250);
+  --ring: oklch(0.2 0.01 250);
+
+  /* --- Flächenart "ink": Druckerschwarz --- */
+  --ink: oklch(0.2 0.01 250);
+  --ink-foreground: oklch(0.975 0.003 250);
+  --ink-muted: oklch(0.8 0.006 250);
+  --ink-border: oklch(0.36 0.008 250);
+  --ink-action: oklch(0.995 0.002 250);
+  --ink-action-foreground: oklch(0.2 0.01 250);
+
+  /* --- Flächenart "brand": Schalter wie in Kursbuch --- */
+  --brand-foreground: oklch(from var(--theme-brand) calc(0.22 + 0.765 * clamp(0, (0.6 - l) * 1000, 1)) 0.004 h);
+  --brand-muted: oklch(from var(--theme-brand) calc(0.32 + 0.54 * clamp(0, (0.6 - l) * 1000, 1)) 0.04 h);
+  --brand-border: oklch(from var(--theme-brand) calc(l - 0.115 + 0.23 * clamp(0, (0.6 - l) * 1000, 1)) calc(c * 0.85) h);
+  --brand-action: oklch(from var(--theme-brand) calc(0.22 + 0.775 * clamp(0, (0.6 - l) * 1000, 1)) 0.002 h);
+  --brand-action-foreground: oklch(from var(--theme-brand) calc(0.985 - 0.765 * clamp(0, (0.6 - l) * 1000, 1)) 0.01 h);
+
+  /* --- Stil: Schrift --- */
+  --style-font-sans: 'Source Sans 3 Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --style-font-heading: 'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
+  --style-font-figure: 'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
+  --heading-weight: 600;
+  --heading-stretch: normal;
+  --heading-transform: none;
+  --figure-weight: 600;
+  --board-weight: 500;
+
+  /* --- Stil: Typo-Rollen --- */
+  --type-h1-size: var(--text-f-7xl);
+  --type-h1-leading: 1.06;
+  --type-h1-tracking: -0.015em;
+  --type-h1-page-size: var(--text-f-6xl);
+  --type-h1-page-leading: 1.08;
+  --type-h1-page-tracking: -0.015em;
+  --type-h2-size: var(--text-f-5xl);
+  --type-h2-leading: 1.12;
+  --type-h2-tracking: -0.01em;
+  --type-h3-lg-size: var(--text-f-3xl);
+  --type-h3-lg-leading: 1.2;
+  --type-h3-lg-tracking: -0.005em;
+  --type-h3-size: var(--text-f-2xl);
+  --type-h3-leading: 1.25;
+  --type-h3-tracking: 0em;
+  --type-box-title-leading: 1.25;
+  --type-lead-size: var(--text-f-xl);
+  --type-lead-leading: 1.55;
+  --type-figure-size: var(--text-f-6xl);
+  --type-board-size: var(--text-f-lg);                             /* eine Stufe unter Kursbuch: bei 1536 px bräuchte der längste Titel sonst 3 px mehr, als die Spalte hergibt */
+
+  /* --- Stil: Form --- */
+  --style-radius-pill: 2px;
+  --style-radius-dot: 9999px;
+  --line-weight: 1px;
+  --line-weight-strong: 2px;
+  --style-shadow-xs: 0 0 0 0 transparent;
+  --style-shadow-sm: 0 0 0 0 transparent;
+  --style-shadow-md: 0 8px 24px -6px oklch(0.2 0.01 250 / 0.18);   /* nur Overlays und Skip-Link */
+
+  /* --- Stil: Kachel (keine Fläche: Linie oben, Inhalt darunter) --- */
+  --tile-bg: transparent;
+  --tile-fg: var(--foreground);
+  --tile-padding: 1.25rem 0 0;
+  --tile-border-width: 2px 0 0;
+  --tile-border-color: var(--foreground);
+  --tile-shadow: none;
+  --tile-hover-shadow: none;
+
+  /* --- Stil: Bewegung (die Tafel steht sofort) --- */
+  --board-row-animation: none;
+  --board-row-stagger: 0ms;
+}
+
+/* Flächenrollen → Flächenarten */
+:root[data-style="editorial"] .surface-highlight {
+  @apply surface-brand;
+}
+:root[data-style="editorial"] .surface-footer {
+  @apply surface-ink;
+}
+:root[data-style="editorial"] .surface-header {
+  @apply surface-plain;
+  border-bottom: var(--line-weight) solid var(--border);
+}
+:root[data-style="editorial"] .surface-board {
+  @apply surface-plain;
+  background-color: transparent;
+  /* surface-plain setzt --surface-bg auf die Kartenfarbe. Die Tafel ist hier aber durchsichtig, dahinter liegt
+     die Grundfläche – Elemente, die ein "Loch" in der Flächenfarbe brauchen, müssen diese Farbe treffen. */
+  --surface-bg: var(--background);
+  border-block: var(--line-weight-strong) solid var(--foreground);
+  border-radius: 0;
+}
+/*
+  Die Tafel hat keinen Kasten mehr, nur zwei Linien: Der Innenabstand der Vorlage (20 bzw. 24 px) würde den
+  Tafeltext gegenüber seinen eigenen Linien einrücken, während Kacheln, Kennzahlen und Überschriften bündig
+  stehen. Bündig heißt hier auch: die Stellenspalte gewinnt die Breite zurück (Research 1.4.4, eine Achse).
+*/
+:root[data-style="editorial"] :is(.board-head, .board-cols, .board-foot, .board-row > a) {
+  padding-inline: 0;
+}
+/*
+  Top-Job: keine eigene Fläche, nur die Linie in der Druckfarbe. Diese Rolle bekommt hier bewusst keine
+  Flächenart – die Kachel hat ja gar keine Fläche, nur einen Anriss. Marker für check-styles.mjs:
+  rolle-ohne-flaeche: tile-featured
+*/
+:root[data-style="editorial"] .tile-featured {
+  border-top-color: var(--primary);
+}
+/* Kacheln ohne Fläche brauchen keine Rundung */
+:root[data-style="editorial"] .tile {
+  border-radius: 0;
+}
+/*
+  Der Punkt im Top-Job-Badge steht sonst in der Signalfarbe. Dieses Preset hat nur eine Druckfarbe, Signal und
+  Aktion sind dasselbe Ochsenblut – der Punkt läge also auf gleichfarbigem Grund und wäre unsichtbar. Deshalb
+  trägt er die Schriftfarbe des Badges. var(--primary-foreground) löst am Punkt selbst auf, also auch innerhalb
+  gescopter Flächen richtig.
+*/
+:root[data-style="editorial"] .badge-dot {
+  background-color: var(--primary-foreground);
+}

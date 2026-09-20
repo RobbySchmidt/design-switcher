@@ -1,0 +1,119 @@
+/*
+  PRESET "Kursbuch" – Konzept: docs/design-konzept.md
+  Eingaben: drei Farben + Radius. Alles andere wird daraus abgeleitet (relative Farbsyntax).
+  Nachrechnen: node scripts/contrast.mjs --style kursbuch ["#brand" "#signal"]
+*/
+:root[data-style="kursbuch"] {
+  /* --- Eingaben --- */
+  --theme-brand: #052f66;                                          /* Hauptfarbe: Markenfläche, Buttons, Links – und der Farbton ALLER Neutralen */
+  --theme-signal: #f42b4f;                                         /* Signalfarbe: Punkte, Linien, großes Wort in der H1 */
+  --theme-card: oklch(from var(--theme-brand) 0.995 0.002 h);      /* helle Fläche (Sektionen, Popover) */
+  --radius: 0.5rem;                                                /* sm 4 · md 6 (Buttons, Inputs) · lg 8 · xl 12 (Karten, Bilder, Tafel) */
+
+  /*
+    Luminanz-Klemmen. "y" im Farbraum xyz-d65 ist genau die Luminanz, mit der WCAG Kontraste rechnet. Alle drei Kanäle
+    mit demselben Faktor zu skalieren dunkelt ab bzw. hellt auf, ohne den Farbton zu verschieben.
+    Mit dem Standard-Blau und -Rot greift keine der Klemmen – sie sichern nur andere Farbwahlen ab.
+  */
+  /* Aktionsfarbe (Buttons, Links, Icons auf hellen Flächen): der Brand, aber höchstens Luminanz 0.13 -> als Link >= 4.5:1 auf der Kachel */
+  --primary: color(from var(--theme-brand) xyz-d65 calc(x * min(1, 0.13 / y)) calc(y * min(1, 0.13 / y)) calc(z * min(1, 0.13 / y)));
+  /* Signal auf hellen Flächen: höchstens Luminanz 0.22 -> als Grafik und großer Text >= 3:1 auch auf der Kachel */
+  --signal: color(from var(--theme-signal) xyz-d65 calc(x * min(1, 0.22 / y)) calc(y * min(1, 0.22 / y)) calc(z * min(1, 0.22 / y)));
+  /* Signal auf dunklen Flächen (Tafel, Markenfläche): mindestens Luminanz 0.19 -> >= 3:1 auf dunklem Grund */
+  --signal-on-dark: color(from var(--theme-signal) xyz-d65 calc(x * max(1, 0.19 / y)) calc(y * max(1, 0.19 / y)) calc(z * max(1, 0.19 / y)));
+  --signal-on-brand: var(--signal-on-dark);                        /* der Brand dieses Presets ist dunkel */
+
+  /* --- Neutrale: feste Helligkeit und Sättigung, Farbton vom Brand --- */
+  --background: oklch(from var(--theme-brand) 0.972 0.011 h);
+  --foreground: oklch(from var(--theme-brand) 0.22 0.035 h);
+  --primary-foreground: oklch(from var(--theme-brand) 0.985 0.004 h);
+  --secondary: oklch(from var(--theme-brand) 0.925 0.028 h);       /* Kacheln, leise Buttons/Badges */
+  --muted: oklch(from var(--theme-brand) 0.945 0.022 h);
+  --muted-foreground: oklch(from var(--theme-brand) 0.46 0.03 h);  /* Sekundärtext */
+  --accent: oklch(from var(--theme-brand) 0.93 0.03 h);
+  --destructive: oklch(0.48 0.13 38);                              /* Rostrot, bewusst fest: Fehler sollen nie wie das Signal aussehen */
+  --border: oklch(from var(--theme-brand) 0.885 0.022 h);          /* dekorative Linien, ~1.3:1 */
+  --input: oklch(from var(--theme-brand) 0.6 0.03 h);              /* Feldkontur, >= 3.2:1 */
+  --ring: oklch(from var(--theme-brand) 0.22 0.05 h);              /* sehr dunkel: der 50-%-Halo erreicht so >= 3.2:1 */
+
+  /* --- Flächenart "ink" (dunkel) --- */
+  --ink: oklch(from var(--theme-brand) 0.2 0.05 h);
+  --ink-foreground: oklch(from var(--theme-brand) 0.975 0.006 h);
+  --ink-muted: oklch(from var(--theme-brand) 0.8 0.035 h);
+  --ink-border: oklch(from var(--theme-brand) 0.34 0.05 h);
+  --ink-action: oklch(from var(--theme-brand) 0.995 0.002 h);      /* heller Button: ein blauer hätte auf ink nur 1.4:1 als Form */
+  --ink-action-foreground: oklch(from var(--theme-brand) 0.22 0.035 h);
+
+  /*
+    --- Flächenart "brand": hell oder dunkel, je nach Helligkeit des Brands ---
+    Schalter: clamp(0, (0.6 - l) * 1000, 1) ergibt 1 bei dunklem Brand (l < 0.6) und 0 bei hellem.
+    Zwischen L 0.57 und 0.61 erreicht weder heller noch dunkler Text 4.5:1 – das Panel warnt dann.
+  */
+  --brand-foreground: oklch(from var(--theme-brand) calc(0.22 + 0.765 * clamp(0, (0.6 - l) * 1000, 1)) 0.004 h);        /* Text */
+  --brand-muted: oklch(from var(--theme-brand) calc(0.32 + 0.54 * clamp(0, (0.6 - l) * 1000, 1)) 0.04 h);               /* Sekundärtext */
+  --brand-border: oklch(from var(--theme-brand) calc(l - 0.115 + 0.23 * clamp(0, (0.6 - l) * 1000, 1)) calc(c * 0.85) h);
+  --brand-action: oklch(from var(--theme-brand) calc(0.22 + 0.775 * clamp(0, (0.6 - l) * 1000, 1)) 0.002 h);            /* Button auf der Markenfläche */
+  --brand-action-foreground: oklch(from var(--theme-brand) calc(0.985 - 0.765 * clamp(0, (0.6 - l) * 1000, 1)) 0.01 h);
+
+  /* --- Stil: Schrift --- */
+  --style-font-sans: 'Source Sans 3 Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --style-font-heading: 'Barlow Semi Condensed', 'Arial Narrow', ui-sans-serif, system-ui, sans-serif;
+  --style-font-figure: 'Barlow Semi Condensed', 'Arial Narrow', ui-sans-serif, system-ui, sans-serif;
+  --heading-weight: 600;
+  --heading-stretch: normal;
+  --heading-transform: none;
+  --figure-weight: 600;
+  --board-weight: 500;
+
+  /* --- Stil: Typo-Rollen --- */
+  --type-h1-size: var(--text-f-7xl);
+  --type-h1-leading: 1.04;
+  --type-h1-tracking: -0.015em;
+  --type-h1-page-size: var(--text-f-6xl);
+  --type-h1-page-leading: 1.05;
+  --type-h1-page-tracking: -0.015em;
+  --type-h2-size: var(--text-f-5xl);
+  --type-h2-leading: 1.1;
+  --type-h2-tracking: -0.01em;
+  --type-h3-lg-size: var(--text-f-3xl);
+  --type-h3-lg-leading: 1.2;
+  --type-h3-lg-tracking: 0em;
+  --type-h3-size: var(--text-f-2xl);
+  --type-h3-leading: 1.2;
+  --type-h3-tracking: 0em;
+  --type-box-title-leading: 1.25;
+  --type-lead-size: var(--text-f-xl);
+  --type-lead-leading: 1.5;
+  --type-figure-size: var(--text-f-6xl);
+  --type-board-size: var(--text-f-xl);
+
+  /* --- Stil: Form --- */
+  --style-radius-pill: 9999px;                                     /* Filterchips, Badges */
+  --style-radius-dot: 9999px;                                      /* Punkte, Halte, Signet */
+  --line-weight: 1px;                                              /* gliedernde Linien */
+  --line-weight-strong: 3px;                                       /* Linienband, Halte-Linie, Marker, Signet */
+  --style-shadow-xs: 0 1px 1px 0 oklch(from var(--theme-brand) 0.2 0.05 h / 0.06);
+  --style-shadow-sm: 0 1px 2px 0 oklch(from var(--theme-brand) 0.2 0.05 h / 0.08), 0 2px 6px -1px oklch(from var(--theme-brand) 0.2 0.05 h / 0.06);
+  --style-shadow-md: 0 1px 2px 0 oklch(from var(--theme-brand) 0.2 0.05 h / 0.08), 0 8px 24px -6px oklch(from var(--theme-brand) 0.2 0.05 h / 0.14);
+
+  /* --- Stil: Kachel (Farbfläche, keine Kante, kein Schatten) --- */
+  --tile-bg: var(--secondary);
+  --tile-fg: var(--foreground);
+  --tile-padding: 1.5rem;
+  --tile-border-width: 1px;
+  --tile-border-color: transparent;
+  --tile-shadow: none;
+  --tile-hover-shadow: none;
+
+  /* --- Stil: Bewegung (Fallblattanzeige) --- */
+  --board-row-animation: board-flip 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --board-row-stagger: 90ms;
+}
+
+/* Flächenrollen → Flächenarten */
+:root[data-style="kursbuch"] :is(.surface-header, .surface-footer, .surface-highlight, .tile-featured) {
+  @apply surface-brand;
+}
+:root[data-style="kursbuch"] .surface-board {
+  @apply surface-ink;
+}

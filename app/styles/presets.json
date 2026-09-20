@@ -1,0 +1,33 @@
+[
+  {
+    "id": "kursbuch",
+    "label": "Kursbuch",
+    "description": "Fahrgastinformation: schmale Grotesk, flache Farbflächen, Navy und Signalrot.",
+    "defaults": { "brand": "#052f66", "signal": "#f42b4f", "radius": 0.5 }
+  },
+  {
+    "id": "plakat",
+    "label": "Plakat",
+    "description": "Laut und hart: fette schmale Versalien, starke schwarze Linien, Radius 0, Gelb als Fläche.",
+    "defaults": { "brand": "#ffd500", "signal": "#e10600", "radius": 0 }
+  },
+  {
+    "id": "weich",
+    "label": "Weich",
+    "description": "Ruhig und freundlich: runde Formen, helle Karten mit getöntem Schatten, Waldgrün und Koralle.",
+    "defaults": { "brand": "#1f5c45", "signal": "#e2604a", "radius": 1 }
+  },
+  {
+    "id": "leitstand",
+    "label": "Leitstand",
+    "description": "Dunkel und technisch: Mono-Ziffern und -Headlines, feine Kanten statt Flächen, Bernstein als Aktion.",
+    "dark": true,
+    "defaults": { "brand": "#22314a", "signal": "#e9b04a", "radius": 0.125 }
+  },
+  {
+    "id": "editorial",
+    "label": "Editorial",
+    "description": "Papier und Serif: Haarlinien gliedern, eine einzige Druckfarbe (Ochsenblut), keine Schatten.",
+    "defaults": { "brand": "#8c1c2b", "signal": "#8c1c2b", "radius": 0.125 }
+  }
+]

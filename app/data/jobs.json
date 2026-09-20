@@ -1,0 +1,290 @@
+[
+  {
+    "id": 1,
+    "slug": "frontend-entwickler-vue",
+    "title": "Frontend-Entwickler Vue.js (m/w/d)",
+    "department": "Entwicklung",
+    "location": "Berlin",
+    "workModel": "Hybrid",
+    "employmentType": "Vollzeit",
+    "experienceLevel": "Mid-Level",
+    "salary": { "min": 55000, "max": 70000, "currency": "EUR" },
+    "postedAt": "2026-09-15",
+    "startDate": "ab sofort",
+    "featured": true,
+    "tags": ["Vue 3", "Nuxt", "TypeScript", "Tailwind CSS"],
+    "shortDescription": "Du entwickelst moderne Web-Oberflächen mit Vue 3 und Nuxt und gestaltest unser Design-System aktiv mit.",
+    "description": "Als Teil unseres Produktteams baust du performante und barrierearme Benutzeroberflächen. Du arbeitest eng mit Design und Backend zusammen und bringst deine Ideen von der ersten Skizze bis zum Release ein.",
+    "tasks": [
+      "Entwicklung neuer Features mit Vue 3, Nuxt und TypeScript",
+      "Pflege und Ausbau unserer Komponentenbibliothek",
+      "Enge Abstimmung mit UX-Design und Backend-Team",
+      "Code-Reviews und Sicherstellung der Codequalität"
+    ],
+    "requirements": [
+      "Mindestens 2 Jahre Erfahrung mit Vue.js",
+      "Sicherer Umgang mit TypeScript, HTML und CSS",
+      "Erfahrung mit REST-APIs und Git",
+      "Gute Deutsch- und Englischkenntnisse"
+    ],
+    "benefits": [
+      "30 Tage Urlaub",
+      "Flexible Arbeitszeiten",
+      "Weiterbildungsbudget von 1.500 € pro Jahr",
+      "Moderne Hardware nach Wahl"
+    ],
+    "contact": { "name": "Lena Hoffmann", "email": "jobs@example.com" }
+  },
+  {
+    "id": 2,
+    "slug": "backend-entwickler-nodejs",
+    "title": "Backend-Entwickler Node.js (m/w/d)",
+    "department": "Entwicklung",
+    "location": "Hamburg",
+    "workModel": "Remote",
+    "employmentType": "Vollzeit",
+    "experienceLevel": "Senior",
+    "salary": { "min": 70000, "max": 90000, "currency": "EUR" },
+    "postedAt": "2026-09-12",
+    "startDate": "2026-11-01",
+    "featured": true,
+    "tags": ["Node.js", "PostgreSQL", "Docker", "REST"],
+    "shortDescription": "Du konzipierst und entwickelst skalierbare APIs und Services für unsere Plattform.",
+    "description": "Du übernimmst Verantwortung für die Architektur unserer Backend-Services. Gemeinsam mit dem Team sorgst du dafür, dass unsere Plattform stabil, sicher und schnell bleibt.",
+    "tasks": [
+      "Konzeption und Entwicklung von APIs mit Node.js",
+      "Datenbankdesign und Performance-Optimierung",
+      "Aufbau automatisierter Tests und CI/CD-Pipelines",
+      "Technisches Mentoring für Junior-Entwickler"
+    ],
+    "requirements": [
+      "Mindestens 5 Jahre Erfahrung in der Backend-Entwicklung",
+      "Sehr gute Kenntnisse in Node.js und SQL-Datenbanken",
+      "Erfahrung mit Docker und Cloud-Infrastruktur",
+      "Eigenverantwortliche und strukturierte Arbeitsweise"
+    ],
+    "benefits": [
+      "100 % Remote möglich",
+      "30 Tage Urlaub",
+      "Betriebliche Altersvorsorge",
+      "Regelmäßige Team-Events"
+    ],
+    "contact": { "name": "Lena Hoffmann", "email": "jobs@example.com" }
+  },
+  {
+    "id": 3,
+    "slug": "ux-ui-designer",
+    "title": "UX/UI Designer (m/w/d)",
+    "department": "Design",
+    "location": "München",
+    "workModel": "Hybrid",
+    "employmentType": "Vollzeit",
+    "experienceLevel": "Mid-Level",
+    "salary": { "min": 50000, "max": 65000, "currency": "EUR" },
+    "postedAt": "2026-09-10",
+    "startDate": "ab sofort",
+    "featured": false,
+    "tags": ["Figma", "Design-System", "Prototyping", "User Research"],
+    "shortDescription": "Du gestaltest intuitive Nutzererlebnisse – von der Recherche bis zum fertigen Interface.",
+    "description": "Du bist die Stimme unserer Nutzer. Mit Research, Wireframes und Prototypen sorgst du dafür, dass unsere Produkte nicht nur gut aussehen, sondern sich auch gut anfühlen.",
+    "tasks": [
+      "Erstellung von Wireframes, Prototypen und UI-Designs in Figma",
+      "Durchführung von Nutzerinterviews und Usability-Tests",
+      "Weiterentwicklung unseres Design-Systems",
+      "Zusammenarbeit mit Entwicklung und Produktmanagement"
+    ],
+    "requirements": [
+      "Abgeschlossenes Studium oder vergleichbare Ausbildung im Bereich Design",
+      "Aussagekräftiges Portfolio",
+      "Sehr gute Figma-Kenntnisse",
+      "Gespür für Typografie, Farbe und Layout"
+    ],
+    "benefits": [
+      "Hybrides Arbeiten (2 Tage Büro)",
+      "Jobticket",
+      "Weiterbildungsbudget",
+      "Zentrales Büro mit Dachterrasse"
+    ],
+    "contact": { "name": "Jonas Becker", "email": "jobs@example.com" }
+  },
+  {
+    "id": 4,
+    "slug": "devops-engineer",
+    "title": "DevOps Engineer (m/w/d)",
+    "department": "Infrastruktur",
+    "location": "Köln",
+    "workModel": "Remote",
+    "employmentType": "Vollzeit",
+    "experienceLevel": "Senior",
+    "salary": { "min": 72000, "max": 95000, "currency": "EUR" },
+    "postedAt": "2026-09-08",
+    "startDate": "nach Vereinbarung",
+    "featured": false,
+    "tags": ["Kubernetes", "Terraform", "AWS", "CI/CD"],
+    "shortDescription": "Du automatisierst unsere Infrastruktur und sorgst für reibungslose Deployments.",
+    "description": "Du baust und betreibst die Plattform, auf der unsere Teams ihre Software ausliefern. Zuverlässigkeit, Sicherheit und Automatisierung stehen dabei im Mittelpunkt.",
+    "tasks": [
+      "Betrieb und Weiterentwicklung unserer Kubernetes-Cluster",
+      "Infrastructure as Code mit Terraform",
+      "Aufbau von Monitoring und Alerting",
+      "Optimierung unserer CI/CD-Pipelines"
+    ],
+    "requirements": [
+      "Mehrjährige Erfahrung im DevOps- oder SRE-Umfeld",
+      "Fundierte Kenntnisse in Kubernetes und AWS",
+      "Scripting-Erfahrung (Bash, Python oder Go)",
+      "Hohes Sicherheitsbewusstsein"
+    ],
+    "benefits": [
+      "100 % Remote möglich",
+      "Rufbereitschaft wird zusätzlich vergütet",
+      "Konferenzbesuche",
+      "30 Tage Urlaub"
+    ],
+    "contact": { "name": "Lena Hoffmann", "email": "jobs@example.com" }
+  },
+  {
+    "id": 5,
+    "slug": "produktmanager-saas",
+    "title": "Produktmanager SaaS (m/w/d)",
+    "department": "Produkt",
+    "location": "Berlin",
+    "workModel": "Hybrid",
+    "employmentType": "Vollzeit",
+    "experienceLevel": "Senior",
+    "salary": { "min": 65000, "max": 85000, "currency": "EUR" },
+    "postedAt": "2026-09-05",
+    "startDate": "2026-12-01",
+    "featured": false,
+    "tags": ["Roadmap", "Agile", "Stakeholder-Management", "Analytics"],
+    "shortDescription": "Du verantwortest die Roadmap unseres SaaS-Produkts und priorisierst, was wirklich zählt.",
+    "description": "Du verbindest Kundenbedürfnisse, Geschäftsziele und technische Machbarkeit. Gemeinsam mit einem crossfunktionalen Team bringst du Features auf den Markt, die unsere Kunden lieben.",
+    "tasks": [
+      "Entwicklung und Pflege der Produkt-Roadmap",
+      "Priorisierung des Backlogs gemeinsam mit dem Entwicklungsteam",
+      "Analyse von Nutzungsdaten und Kundenfeedback",
+      "Abstimmung mit Vertrieb, Marketing und Support"
+    ],
+    "requirements": [
+      "Mindestens 4 Jahre Erfahrung im Produktmanagement",
+      "Erfahrung mit B2B-SaaS-Produkten",
+      "Analytisches Denken und datengetriebene Arbeitsweise",
+      "Starke Kommunikationsfähigkeiten"
+    ],
+    "benefits": [
+      "Flexible Arbeitszeiten",
+      "Mitarbeiterbeteiligung",
+      "Weiterbildungsbudget",
+      "Hundefreundliches Büro"
+    ],
+    "contact": { "name": "Jonas Becker", "email": "jobs@example.com" }
+  },
+  {
+    "id": 6,
+    "slug": "werkstudent-marketing",
+    "title": "Werkstudent Online-Marketing (m/w/d)",
+    "department": "Marketing",
+    "location": "Leipzig",
+    "workModel": "Vor Ort",
+    "employmentType": "Werkstudent",
+    "experienceLevel": "Einsteiger",
+    "salary": { "min": 15, "max": 18, "currency": "EUR", "unit": "Stunde" },
+    "postedAt": "2026-09-03",
+    "startDate": "ab sofort",
+    "featured": false,
+    "tags": ["Social Media", "SEO", "Content", "Newsletter"],
+    "shortDescription": "Du unterstützt unser Marketing-Team bei Social Media, SEO und Content-Erstellung.",
+    "description": "Neben dem Studium sammelst du bei uns echte Praxiserfahrung. Du übernimmst eigene kleine Projekte und lernst alle Facetten des Online-Marketings kennen.",
+    "tasks": [
+      "Planung und Erstellung von Social-Media-Beiträgen",
+      "Unterstützung bei SEO-Analysen",
+      "Pflege unseres Newsletters",
+      "Recherche und Aufbereitung von Inhalten"
+    ],
+    "requirements": [
+      "Eingeschriebener Student (m/w/d), idealerweise im Bereich Marketing oder Medien",
+      "15–20 Stunden pro Woche verfügbar",
+      "Sehr gutes Sprachgefühl in Deutsch",
+      "Erste Erfahrungen mit Social Media von Vorteil"
+    ],
+    "benefits": [
+      "Flexible Einteilung rund um den Stundenplan",
+      "Übernahmemöglichkeit nach dem Studium",
+      "Kostenlose Getränke und Obst",
+      "Junges, offenes Team"
+    ],
+    "contact": { "name": "Mira Schulz", "email": "jobs@example.com" }
+  },
+  {
+    "id": 7,
+    "slug": "kundenberater-support",
+    "title": "Kundenberater Support (m/w/d)",
+    "department": "Customer Success",
+    "location": "Stuttgart",
+    "workModel": "Hybrid",
+    "employmentType": "Teilzeit",
+    "experienceLevel": "Einsteiger",
+    "salary": { "min": 34000, "max": 42000, "currency": "EUR" },
+    "postedAt": "2026-08-28",
+    "startDate": "2026-10-15",
+    "featured": false,
+    "tags": ["Support", "Ticketsystem", "Kommunikation", "B2B"],
+    "shortDescription": "Du bist erster Ansprechpartner für unsere Kunden und löst ihre Anliegen per E-Mail, Chat und Telefon.",
+    "description": "Du hilfst unseren Kunden schnell und freundlich weiter und gibst ihr Feedback an unser Produktteam zurück. Quereinsteiger sind herzlich willkommen.",
+    "tasks": [
+      "Bearbeitung von Kundenanfragen per E-Mail, Chat und Telefon",
+      "Dokumentation im Ticketsystem",
+      "Pflege unserer Hilfe-Artikel",
+      "Weitergabe von Kundenfeedback an das Produktteam"
+    ],
+    "requirements": [
+      "Freude am Umgang mit Menschen",
+      "Sehr gute Deutschkenntnisse in Wort und Schrift",
+      "Technisches Grundverständnis",
+      "Geduld und Lösungsorientierung"
+    ],
+    "benefits": [
+      "Teilzeit ab 20 Stunden möglich",
+      "Strukturierte Einarbeitung",
+      "Jobticket",
+      "28 Tage Urlaub"
+    ],
+    "contact": { "name": "Mira Schulz", "email": "jobs@example.com" }
+  },
+  {
+    "id": 8,
+    "slug": "ausbildung-fachinformatiker-anwendungsentwicklung",
+    "title": "Ausbildung Fachinformatiker Anwendungsentwicklung (m/w/d)",
+    "department": "Entwicklung",
+    "location": "Hamburg",
+    "workModel": "Vor Ort",
+    "employmentType": "Ausbildung",
+    "experienceLevel": "Einsteiger",
+    "salary": { "min": 1100, "max": 1350, "currency": "EUR", "unit": "Monat" },
+    "postedAt": "2026-08-20",
+    "startDate": "2027-08-01",
+    "featured": false,
+    "tags": ["Ausbildung", "JavaScript", "Teamarbeit", "IHK"],
+    "shortDescription": "Starte deine Karriere in der Softwareentwicklung – mit festen Mentoren und echten Projekten ab dem ersten Tag.",
+    "description": "In drei Jahren lernst du bei uns alles, was du für die professionelle Softwareentwicklung brauchst. Du durchläufst mehrere Teams und arbeitest von Anfang an an echten Produkten mit.",
+    "tasks": [
+      "Erlernen moderner Programmiersprachen und Frameworks",
+      "Mitarbeit in echten Kundenprojekten",
+      "Durchlaufen verschiedener Teams (Frontend, Backend, DevOps)",
+      "Vorbereitung auf die IHK-Abschlussprüfung"
+    ],
+    "requirements": [
+      "Guter Realschulabschluss oder (Fach-)Abitur",
+      "Begeisterung für Technik und Programmierung",
+      "Logisches Denkvermögen",
+      "Teamfähigkeit und Lernbereitschaft"
+    ],
+    "benefits": [
+      "Persönlicher Mentor",
+      "Eigener Laptop",
+      "Übernahmegarantie bei guten Leistungen",
+      "Zuschuss zum Deutschlandticket"
+    ],
+    "contact": { "name": "Mira Schulz", "email": "jobs@example.com" }
+  }
+]

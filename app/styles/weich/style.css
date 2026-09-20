@@ -1,0 +1,119 @@
+/*
+  PRESET "Weich" – Konzept: app/styles/weich/konzept.md
+  Nachrechnen: node scripts/contrast.mjs --style weich   (Rezept: scripts/style-recipes.mjs, gleiche L/C-Werte wie hier)
+*/
+:root[data-style="weich"] {
+  /* --- Eingaben --- */
+  --theme-brand: #1f5c45;
+  --theme-signal: #e2604a;
+  --theme-card: oklch(0.995 0.003 85);                             /* warmes Weiß, fester Farbton: Flächen bleiben warm, egal welcher Brand */
+  --radius: 1rem;                                                  /* md 14 (Buttons) · lg 16 · xl 24 (Kacheln, Bilder, Tafel) */
+
+  --primary: color(from var(--theme-brand) xyz-d65 calc(x * min(1, 0.13 / y)) calc(y * min(1, 0.13 / y)) calc(z * min(1, 0.13 / y)));
+  --signal: color(from var(--theme-signal) xyz-d65 calc(x * min(1, 0.22 / y)) calc(y * min(1, 0.22 / y)) calc(z * min(1, 0.22 / y)));
+  --signal-on-dark: color(from var(--theme-signal) xyz-d65 calc(x * max(1, 0.19 / y)) calc(y * max(1, 0.19 / y)) calc(z * max(1, 0.19 / y)));
+  --signal-on-brand: oklch(from var(--theme-signal) 0.75 0.14 h);  /* helle Koralle: die Eingabe schafft auf dem dunklen Grün nur 2.25 zu 1 */
+
+  /* --- Neutrale: Flächen warm (Hue 85), Text und Tönungen im Farbton des Brands --- */
+  --background: oklch(0.975 0.008 85);
+  --foreground: oklch(from var(--theme-brand) 0.25 0.03 h);
+  --primary-foreground: oklch(from var(--theme-brand) 0.985 0.004 h);
+  --secondary: oklch(from var(--theme-brand) 0.94 0.025 h);
+  --muted: oklch(0.955 0.01 85);
+  --muted-foreground: oklch(from var(--theme-brand) 0.46 0.03 h);
+  --accent: oklch(from var(--theme-brand) 0.945 0.025 h);
+  --destructive: oklch(0.45 0.15 350);
+  --border: oklch(0.9 0.01 85);
+  --input: oklch(from var(--theme-brand) 0.6 0.03 h);
+  --ring: oklch(from var(--theme-brand) 0.22 0.05 h);
+
+  /* --- Flächenart "ink" (in diesem Preset keiner Rolle zugeordnet, gehört aber zum Vertrag) --- */
+  --ink: oklch(from var(--theme-brand) 0.22 0.04 h);
+  --ink-foreground: oklch(from var(--theme-brand) 0.975 0.006 h);
+  --ink-muted: oklch(from var(--theme-brand) 0.8 0.03 h);
+  --ink-border: oklch(from var(--theme-brand) 0.35 0.04 h);
+  --ink-action: oklch(from var(--theme-brand) 0.995 0.002 h);
+  --ink-action-foreground: oklch(from var(--theme-brand) 0.25 0.03 h);
+
+  /* --- Flächenart "brand": Schalter wie in Kursbuch --- */
+  --brand-foreground: oklch(from var(--theme-brand) calc(0.22 + 0.765 * clamp(0, (0.6 - l) * 1000, 1)) 0.004 h);
+  --brand-muted: oklch(from var(--theme-brand) calc(0.32 + 0.54 * clamp(0, (0.6 - l) * 1000, 1)) 0.04 h);
+  --brand-border: oklch(from var(--theme-brand) calc(l - 0.115 + 0.23 * clamp(0, (0.6 - l) * 1000, 1)) calc(c * 0.85) h);
+  --brand-action: oklch(from var(--theme-brand) calc(0.22 + 0.775 * clamp(0, (0.6 - l) * 1000, 1)) 0.002 h);
+  --brand-action-foreground: oklch(from var(--theme-brand) calc(0.985 - 0.765 * clamp(0, (0.6 - l) * 1000, 1)) 0.01 h);
+
+  /* --- Stil: Schrift --- */
+  --style-font-sans: 'Figtree Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --style-font-heading: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+  --style-font-figure: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+  --heading-weight: 700;
+  --heading-stretch: normal;
+  --heading-transform: none;
+  --figure-weight: 700;
+  --board-weight: 500;                                             /* eine Stufe leichter: schafft in der Tafelspalte noch ein paar Pixel */
+
+  /* --- Stil: Typo-Rollen --- */
+  --type-h1-size: var(--text-f-7xl);
+  --type-h1-leading: 1.05;
+  --type-h1-tracking: -0.02em;
+  --type-h1-page-size: var(--text-f-6xl);
+  --type-h1-page-leading: 1.08;
+  --type-h1-page-tracking: -0.02em;
+  --type-h2-size: var(--text-f-5xl);
+  --type-h2-leading: 1.12;
+  --type-h2-tracking: -0.015em;
+  --type-h3-lg-size: var(--text-f-3xl);
+  --type-h3-lg-leading: 1.2;
+  --type-h3-lg-tracking: -0.01em;
+  --type-h3-size: var(--text-f-2xl);
+  --type-h3-leading: 1.25;
+  --type-h3-tracking: -0.005em;
+  --type-box-title-leading: 1.25;
+  --type-lead-size: var(--text-f-xl);
+  --type-lead-leading: 1.55;
+  --type-figure-size: var(--text-f-6xl);
+  --type-board-size: 1rem;                                         /* Bricolage baut breit: die Tafelspalte braucht die kleinste sinnvolle Stufe (Research 1.2.2) */
+
+  /* --- Stil: Form --- */
+  --style-radius-pill: 9999px;
+  --style-radius-dot: 9999px;
+  --line-weight: 1px;
+  --line-weight-strong: 3px;
+  --style-shadow-xs: 0 1px 2px 0 oklch(from var(--theme-brand) 0.3 0.05 h / 0.08);
+  --style-shadow-sm: 0 1px 2px 0 oklch(from var(--theme-brand) 0.3 0.05 h / 0.08), 0 6px 16px -4px oklch(from var(--theme-brand) 0.3 0.05 h / 0.14);  /* zweite Ebene angehoben: sonst verschwindet die Kachel auf der Card-Fläche */
+  --style-shadow-md: 0 2px 4px 0 oklch(from var(--theme-brand) 0.3 0.05 h / 0.08), 0 16px 36px -8px oklch(from var(--theme-brand) 0.3 0.05 h / 0.16);
+
+  /* --- Stil: Kachel (helle Fläche mit Schatten, keine Kante) --- */
+  --tile-bg: var(--card);
+  --tile-fg: var(--foreground);
+  --tile-padding: 1.5rem;
+  --tile-border-width: 0px;
+  --tile-border-color: transparent;
+  --tile-shadow: var(--style-shadow-sm);
+  --tile-hover-shadow: var(--style-shadow-md);
+
+  /* --- Stil: Bewegung (ruhiges Einblenden) --- */
+  --board-row-animation: board-fade 300ms ease-out both;
+  --board-row-stagger: 70ms;
+}
+
+/* Flächenrollen → Flächenarten */
+:root[data-style="weich"] :is(.surface-highlight, .surface-footer, .tile-featured) {
+  @apply surface-brand;
+}
+:root[data-style="weich"] .surface-header {
+  @apply surface-plain;
+  box-shadow: var(--style-shadow-xs);
+}
+:root[data-style="weich"] .surface-board {
+  @apply surface-plain;
+  box-shadow: var(--style-shadow-md);
+}
+/*
+  Die grüne Top-Job-Kachel trägt keinen Schatten: Fläche ODER Schatten.
+  Wirkt auch im Hover, weil ungeschichtete Regeln jede Regel aus @layer components schlagen
+  (.tile:hover steht dort) – unabhängig von der Spezifität. Diese Regel also NICHT in eine Schicht verschieben.
+*/
+:root[data-style="weich"] .tile-featured {
+  box-shadow: none;
+}

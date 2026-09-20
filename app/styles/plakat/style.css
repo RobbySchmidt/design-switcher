@@ -1,0 +1,131 @@
+/*
+  PRESET "Plakat" – Konzept: app/styles/plakat/konzept.md
+  Nachrechnen: node scripts/contrast.mjs --style plakat   (Rezept: scripts/style-recipes.mjs, gleiche L/C-Werte wie hier)
+*/
+:root[data-style="plakat"] {
+  /* --- Eingaben --- */
+  --theme-brand: #ffd500;                                          /* helle Markenfläche – nie Text- oder Linkfarbe */
+  --theme-signal: #e10600;
+  --theme-card: oklch(from var(--theme-brand) 1 0 h);              /* reines Weiß */
+  --radius: 0rem;
+
+  --primary: oklch(from var(--theme-brand) 0.16 0.01 h);           /* Aktion ist Schwarz: Gelb erreicht als Text nie 4.5:1 */
+  --signal: color(from var(--theme-signal) xyz-d65 calc(x * min(1, 0.22 / y)) calc(y * min(1, 0.22 / y)) calc(z * min(1, 0.22 / y)));
+  --signal-on-dark: color(from var(--theme-signal) xyz-d65 calc(x * max(1, 0.19 / y)) calc(y * max(1, 0.19 / y)) calc(z * max(1, 0.19 / y)));
+  --signal-on-brand: var(--signal);                                /* der Brand dieses Presets ist hell */
+
+  /* --- Neutrale: fast ohne Chroma --- */
+  --background: oklch(from var(--theme-brand) 0.985 0.004 h);
+  --foreground: oklch(from var(--theme-brand) 0.16 0.01 h);
+  --primary-foreground: oklch(from var(--theme-brand) 0.99 0.005 h);
+  --secondary: oklch(from var(--theme-brand) 0.94 0.01 h);
+  --muted: oklch(from var(--theme-brand) 0.955 0.008 h);
+  --muted-foreground: oklch(from var(--theme-brand) 0.42 0.01 h);
+  --accent: oklch(from var(--theme-brand) 0.93 0.012 h);
+  --destructive: oklch(0.45 0.16 355);                             /* Magenta-Rot: nicht mit dem Signalrot verwechselbar */
+  --border: oklch(from var(--theme-brand) 0.16 0.01 h);            /* Linien sind schwarz */
+  --input: oklch(from var(--theme-brand) 0.16 0.01 h);
+  --ring: oklch(from var(--theme-brand) 0.16 0.01 h);
+
+  /* --- Flächenart "ink": Schwarz --- */
+  --ink: oklch(from var(--theme-brand) 0.16 0.01 h);
+  --ink-foreground: oklch(from var(--theme-brand) 0.985 0.004 h);
+  --ink-muted: oklch(from var(--theme-brand) 0.8 0.01 h);
+  --ink-border: oklch(from var(--theme-brand) 0.4 0.01 h);
+  --ink-action: oklch(from var(--theme-brand) 0.99 0.005 h);
+  --ink-action-foreground: oklch(from var(--theme-brand) 0.16 0.01 h);
+
+  /* --- Flächenart "brand": Schalter wie in Kursbuch (bei diesem hellen Brand: dunkler Text, schwarzer Button) --- */
+  --brand-foreground: oklch(from var(--theme-brand) calc(0.22 + 0.765 * clamp(0, (0.6 - l) * 1000, 1)) 0.004 h);
+  --brand-muted: oklch(from var(--theme-brand) calc(0.32 + 0.54 * clamp(0, (0.6 - l) * 1000, 1)) 0.04 h);
+  --brand-border: oklch(from var(--theme-brand) 0.16 0.01 h);      /* schwarze Linien auch auf Gelb */
+  --brand-action: oklch(from var(--theme-brand) calc(0.22 + 0.775 * clamp(0, (0.6 - l) * 1000, 1)) 0.002 h);
+  --brand-action-foreground: oklch(from var(--theme-brand) calc(0.985 - 0.765 * clamp(0, (0.6 - l) * 1000, 1)) 0.01 h);
+
+  /* --- Stil: Schrift (eine Familie, zwei Breiten) --- */
+  --style-font-sans: 'Archivo Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --style-font-heading: 'Archivo Variable', 'Arial Narrow', ui-sans-serif, system-ui, sans-serif;
+  --style-font-figure: 'Archivo Variable', 'Arial Narrow', ui-sans-serif, system-ui, sans-serif;
+  --heading-weight: 800;
+  --heading-stretch: 75%;
+  --heading-transform: uppercase;
+  --figure-weight: 800;
+  --board-weight: 700;
+
+  /* --- Stil: Typo-Rollen --- */
+  --type-h1-size: var(--text-f-7xl);
+  --type-h1-leading: 0.95;
+  --type-h1-tracking: -0.01em;
+  --type-h1-page-size: var(--text-f-6xl);
+  --type-h1-page-leading: 0.98;
+  --type-h1-page-tracking: -0.01em;
+  --type-h2-size: var(--text-f-5xl);
+  --type-h2-leading: 1;
+  --type-h2-tracking: -0.005em;
+  --type-h3-lg-size: var(--text-f-3xl);
+  --type-h3-lg-leading: 1.05;
+  --type-h3-lg-tracking: 0em;
+  --type-h3-size: var(--text-f-2xl);
+  --type-h3-leading: 1.1;
+  --type-h3-tracking: 0em;
+  --type-box-title-leading: 1.1;
+  --type-lead-size: var(--text-f-xl);
+  --type-lead-leading: 1.45;
+  --type-figure-size: var(--text-f-7xl);
+  --type-board-size: var(--text-f-xl);                             /* schmale Versalien: die Spalte reicht */
+
+  /* --- Stil: Form --- */
+  --style-radius-pill: 0px;
+  --style-radius-dot: 0px;
+  --line-weight: 3px;
+  --line-weight-strong: 4px;
+  --style-shadow-xs: 0 0 0 0 transparent;
+  --style-shadow-sm: 0 0 0 0 transparent;
+  --style-shadow-md: 0 0 0 0 transparent;
+
+  /* --- Stil: Kachel (weiße Fläche, starke Kante, kein Schatten) --- */
+  --tile-bg: var(--card);
+  --tile-fg: var(--foreground);
+  --tile-padding: 1.5rem;
+  --tile-border-width: 3px;
+  --tile-border-color: var(--foreground);
+  --tile-shadow: none;
+  --tile-hover-shadow: none;
+
+  /* --- Stil: Bewegung (keine) --- */
+  --board-row-animation: none;
+  --board-row-stagger: 0ms;
+}
+
+/* Flächenrollen → Flächenarten */
+:root[data-style="plakat"] :is(.surface-header, .surface-highlight, .tile-featured) {
+  @apply surface-brand;
+}
+:root[data-style="plakat"] .surface-footer {
+  @apply surface-ink;
+}
+:root[data-style="plakat"] .surface-board {
+  @apply surface-plain;
+  border: var(--line-weight) solid var(--border);
+}
+
+/* Regeln auf dokumentierte Rollenklassen */
+:root[data-style="plakat"] .surface-header {
+  border-bottom: var(--line-weight) solid var(--border);
+}
+:root[data-style="plakat"] .board-cols {                           /* invertierter Tabellenkopf */
+  background-color: var(--foreground);
+  color: var(--background);
+}
+:root[data-style="plakat"] .tile:not(.tile-featured):hover {        /* Hover füllt die Kachel gelb */
+  background-color: var(--brand);
+}
+/*
+  Harte Zustandswechsel. Die Regel trifft ABSICHTLICH alle Links, Buttons und Kacheln dieses Presets: Spec 5.2
+  verlangt „Hover ist ein harter Farbwechsel ohne Übergang“, und das gilt für jedes Bedienelement, nicht für eine
+  Auswahl davon. Betroffen sind nur Zustandsübergänge (transition) – Seitenwechsel, Sheet und Accordion laufen
+  als Animationen auf anderen Elementen und bleiben unberührt.
+*/
+:root[data-style="plakat"] :is(a, button, .tile, a svg) {
+  transition-duration: 0s;
+}

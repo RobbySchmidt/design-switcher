@@ -1,0 +1,130 @@
+/*
+  PRESET "Leitstand" – Konzept: app/styles/leitstand/konzept.md
+  Eingaben mit anderen Rollen: Brand = Blaugrau der Flächen, Signal = Bernstein UND Aktionsfarbe.
+  Die Registry setzt "dark": true -> <html class="dark">, damit die dark:-Klassen der shadcn-Komponenten greifen.
+  Nachrechnen: node scripts/contrast.mjs --style leitstand
+*/
+:root[data-style="leitstand"] {
+  /* --- Eingaben --- */
+  --theme-brand: #22314a;
+  --theme-signal: #e9b04a;
+  --theme-card: oklch(from var(--theme-brand) 0.225 0.028 h);      /* eine Stufe über dem Grund */
+  --radius: 0.125rem;
+
+  /*
+    Die Seite ist dunkel: Signal und Aktion brauchen mindestens Luminanz 0.19. Weil das Signal hier zugleich die
+    Aktionsfarbe ist, tragen alle fünf Rollen denselben geklemmten Bernstein. Die Klemme steht deshalb nur einmal
+    an --signal-on-dark; die anderen lesen sie. Alle Deklarationen stehen auf demselben Element (:root), die
+    Weitergabe per var() löst also identisch auf.
+  */
+  --signal-on-dark: color(from var(--theme-signal) xyz-d65 calc(x * max(1, 0.19 / y)) calc(y * max(1, 0.19 / y)) calc(z * max(1, 0.19 / y)));
+  --signal: var(--signal-on-dark);
+  --signal-on-brand: var(--signal-on-dark);
+  --primary: var(--signal-on-dark);
+
+  /* --- Neutrale: alle im Farbton des Brands, dunkel --- */
+  --background: oklch(from var(--theme-brand) 0.19 0.025 h);
+  --foreground: oklch(from var(--theme-brand) 0.94 0.01 h);
+  --primary-foreground: oklch(from var(--theme-brand) 0.19 0.025 h);
+  --secondary: oklch(from var(--theme-brand) 0.27 0.03 h);
+  --muted: oklch(from var(--theme-brand) 0.245 0.028 h);
+  --muted-foreground: oklch(from var(--theme-brand) 0.74 0.02 h);
+  --accent: oklch(from var(--theme-brand) 0.29 0.035 h);
+  --destructive: oklch(0.7 0.15 25);
+  --border: oklch(from var(--theme-brand) 0.36 0.03 h);
+  --input: oklch(from var(--theme-brand) 0.58 0.03 h);
+  --ring: oklch(from var(--theme-brand) 0.94 0.01 h);
+
+  /* --- Flächenart "ink": eine Stufe UNTER dem Grund --- */
+  --ink: oklch(from var(--theme-brand) 0.15 0.02 h);
+  --ink-foreground: oklch(from var(--theme-brand) 0.94 0.01 h);
+  --ink-muted: oklch(from var(--theme-brand) 0.74 0.02 h);
+  --ink-border: oklch(from var(--theme-brand) 0.3 0.03 h);
+  --ink-action: var(--signal-on-dark);
+  --ink-action-foreground: oklch(from var(--theme-brand) 0.19 0.025 h);
+
+  /* --- Flächenart "brand": Schalter wie in Kursbuch, der Button bleibt Bernstein --- */
+  --brand-foreground: oklch(from var(--theme-brand) calc(0.22 + 0.765 * clamp(0, (0.6 - l) * 1000, 1)) 0.004 h);
+  --brand-muted: oklch(from var(--theme-brand) calc(0.32 + 0.54 * clamp(0, (0.6 - l) * 1000, 1)) 0.04 h);
+  --brand-border: oklch(from var(--theme-brand) calc(l - 0.115 + 0.23 * clamp(0, (0.6 - l) * 1000, 1)) calc(c * 0.85) h);
+  --brand-action: var(--signal-on-dark);
+  --brand-action-foreground: oklch(from var(--theme-brand) 0.19 0.025 h);
+
+  /* --- Stil: Schrift --- */
+  --style-font-sans: 'IBM Plex Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --style-font-heading: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --style-font-figure: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --heading-weight: 600;
+  --heading-stretch: normal;
+  --heading-transform: none;
+  --figure-weight: 500;
+  --board-weight: 500;
+
+  /* --- Stil: Typo-Rollen (kleinere Skala: Mono ist breit) --- */
+  --type-h1-size: var(--text-f-5xl);
+  --type-h1-leading: 1.12;
+  --type-h1-tracking: -0.03em;
+  --type-h1-page-size: var(--text-f-4xl);
+  --type-h1-page-leading: 1.15;
+  --type-h1-page-tracking: -0.03em;
+  --type-h2-size: var(--text-f-4xl);
+  --type-h2-leading: 1.15;
+  --type-h2-tracking: -0.03em;
+  --type-h3-lg-size: var(--text-f-2xl);
+  --type-h3-lg-leading: 1.25;
+  --type-h3-lg-tracking: -0.02em;
+  --type-h3-size: var(--text-f-xl);
+  --type-h3-leading: 1.3;
+  --type-h3-tracking: -0.01em;
+  --type-box-title-leading: 1.3;
+  --type-lead-size: var(--text-f-xl);
+  --type-lead-leading: 1.55;
+  --type-figure-size: var(--text-f-5xl);
+  --type-board-size: 1rem;                                         /* Mono baut breit (rund 0.6 em je Zeichen): kleinste zulässige Stufe (Research 1.2.2) */
+
+  /* --- Stil: Form --- */
+  --style-radius-pill: 2px;
+  --style-radius-dot: 0px;
+  --line-weight: 1px;
+  --line-weight-strong: 2px;
+  --style-shadow-xs: 0 0 0 0 transparent;
+  --style-shadow-sm: 0 1px 2px 0 oklch(0 0 0 / 0.4);
+  --style-shadow-md: 0 2px 4px 0 oklch(0 0 0 / 0.4), 0 12px 32px -8px oklch(0 0 0 / 0.6);
+
+  /* --- Stil: Kachel (Kante statt Fläche) --- */
+  --tile-bg: transparent;
+  --tile-fg: var(--foreground);
+  --tile-padding: 1.5rem;
+  --tile-border-width: 1px;
+  --tile-border-color: var(--border);
+  --tile-shadow: none;
+  --tile-hover-shadow: none;
+
+  /* --- Stil: Bewegung (Fallblattanzeige) --- */
+  --board-row-animation: board-flip 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --board-row-stagger: 90ms;
+}
+
+/* Flächenrollen → Flächenarten */
+:root[data-style="leitstand"] :is(.surface-highlight, .tile-featured) {
+  @apply surface-brand;
+}
+:root[data-style="leitstand"] .surface-header {
+  @apply surface-plain;
+  border-bottom: var(--line-weight) solid var(--border);
+}
+:root[data-style="leitstand"] .surface-footer {
+  @apply surface-ink;
+}
+:root[data-style="leitstand"] .surface-board {
+  @apply surface-ink;
+  border: var(--line-weight) solid var(--ink-border);
+}
+/*
+  Der Punkt im Top-Job-Badge steht sonst in der Signalfarbe. Hier ist das Signal zugleich die Aktionsfarbe,
+  der Punkt läge also Bernstein auf Bernstein und wäre unsichtbar. Deshalb trägt er die Schriftfarbe des
+  Badges. var(--primary-foreground) löst am Punkt selbst auf, also auch innerhalb gescopter Flächen richtig.
+*/
+:root[data-style="leitstand"] .badge-dot {
+  background-color: var(--primary-foreground);
+}
