@@ -46,7 +46,7 @@ export function parseThemeStore(raw: string | null, knownIds: string[], fallback
   return { style, overrides }
 }
 
-/** ?style=<id> (nur im Dev-Modus ausgewertet) schlägt den gespeicherten Stil */
+/** ?style=<id> in der URL schlägt den gespeicherten Stil */
 export function pickStyle(queryStyle: unknown, store: ThemeStore, knownIds: string[]): string {
   return typeof queryStyle === 'string' && knownIds.includes(queryStyle) ? queryStyle : store.style
 }

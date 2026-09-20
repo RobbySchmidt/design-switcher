@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /*
-  Themer (nur im Dev-Modus eingebunden, siehe app.vue).
+  Themer (in Dev-Server und Build eingebunden, siehe app.vue).
   Er wählt das Stil-Preset (data-style auf <html>) und setzt vier CSS-Variablen: --theme-brand, --theme-signal,
   --theme-card, --radius. Alles andere leitet app/styles/<id>/style.css daraus ab. Das Panel rechnet nichts selbst aus,
   sondern MISST die Farben, die der Browser tatsächlich auflöst (app/styles/measure.js).
@@ -157,7 +157,7 @@ watch([activeStyle, brand, signal, card, radius], apply)
     <section v-show="open" id="themer-panel" class="themer-panel" aria-label="Themer">
       <header class="themer-head">
         <strong>Themer</strong>
-        <span>nur im Dev-Modus sichtbar</span>
+        <span>Anpassungen bleiben in diesem Browser</span>
       </header>
 
       <div class="themer-field">

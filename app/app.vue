@@ -2,43 +2,40 @@
 import { DEFAULT_STYLE, stylePresets } from '~/styles'
 import { parseThemeStore, pickStyle, STORAGE_KEY } from '~/styles/storage'
 
-// Der Themer ist ein Entwicklungswerkzeug: Er wird nur im Dev-Modus eingebunden (yarn dev), nicht im Build.
-// Im Build steht das Stil-Preset fest in nuxt.config.ts (htmlAttrs['data-style']).
-const showThemer = import.meta.dev
+// Der Themer läuft überall: im Dev-Server wie im Build. Das Stil-Preset ist damit auch in der
+// ausgelieferten Seite umschaltbar; nuxt.config.ts (htmlAttrs['data-style']) liefert nur den Startwert,
+// bevor Query-Parameter oder localStorage etwas anderes sagen.
+const ids = stylePresets.map(preset => preset.id)
+const dark = Object.fromEntries(stylePresets.map(preset => [preset.id, !!preset.dark]))
 
-if (showThemer) {
-  const ids = stylePresets.map(preset => preset.id)
-  const dark = Object.fromEntries(stylePresets.map(preset => [preset.id, !!preset.dark]))
-
-  // Aktives Preset als Nuxt-Zustand: unhead hält data-style und .dark damit auch über Seitenwechsel hinweg fest.
-  // Das ThemePanel schreibt in denselben Zustand.
-  const activeStyle = useState('themer-style', () => DEFAULT_STYLE)
-  if (import.meta.client) {
-    try {
-      const query = new URLSearchParams(location.search).get('style')
-      activeStyle.value = pickStyle(query, parseThemeStore(localStorage.getItem(STORAGE_KEY), ids, DEFAULT_STYLE), ids)
-    }
-    catch {
-      // Speicher blockiert: beim Standard bleiben
-    }
+// Aktives Preset als Nuxt-Zustand: unhead hält data-style und .dark damit auch über Seitenwechsel hinweg fest.
+// Das ThemePanel schreibt in denselben Zustand.
+const activeStyle = useState('themer-style', () => DEFAULT_STYLE)
+if (import.meta.client) {
+  try {
+    const query = new URLSearchParams(location.search).get('style')
+    activeStyle.value = pickStyle(query, parseThemeStore(localStorage.getItem(STORAGE_KEY), ids, DEFAULT_STYLE), ids)
   }
-
-  useHead({
-    htmlAttrs: {
-      'data-style': activeStyle,
-      'class': computed(() => dark[activeStyle.value] ? 'dark' : ''),
-    },
-    // Gespeichertes Test-Theme schon im <head> setzen, damit die Seite beim Neuladen nicht kurz im Standard aufblitzt.
-    // Gleiche Logik wie parseThemeStore/pickStyle, nur als ES5-Einzeiler ohne Importe. Wichtig: Wertebereich
-    // (Radius 0–1.5) und Eigenschafts-Prüfung (hasOwnProperty statt `in`, das auch geerbte Object.prototype-Namen
-    // träfe) müssen exakt zu parseThemeStore/pickStyle passen, sonst blitzt genau der Zustand auf, den dieses
-    // Skript verhindern soll.
-    script: [{
-      key: 'themer-restore',
-      innerHTML: `try{var K=${JSON.stringify(dark)},H=Object.prototype.hasOwnProperty,t=JSON.parse(localStorage.getItem('${STORAGE_KEY}')||'{}');if(!t.overrides&&(t.brand||t.signal||t.radius!=null))t={style:'${DEFAULT_STYLE}',overrides:{'${DEFAULT_STYLE}':t}};var q=new URLSearchParams(location.search).get('style'),id=H.call(K,q)?q:(H.call(K,t.style)?t.style:'${DEFAULT_STYLE}'),e=document.documentElement,s=e.style,o=(t.overrides||{})[id]||{},h=/^#[0-9a-f]{6}$/i;e.setAttribute('data-style',id);e.classList.toggle('dark',K[id]);h.test(o.brand)&&s.setProperty('--theme-brand',o.brand);h.test(o.signal)&&s.setProperty('--theme-signal',o.signal);h.test(o.card)&&s.setProperty('--theme-card',o.card);typeof o.radius=='number'&&o.radius>=0&&o.radius<=1.5&&s.setProperty('--radius',o.radius+'rem')}catch(e){}`,
-    }],
-  })
+  catch {
+    // Speicher blockiert: beim Standard bleiben
+  }
 }
+
+useHead({
+  htmlAttrs: {
+    'data-style': activeStyle,
+    'class': computed(() => dark[activeStyle.value] ? 'dark' : ''),
+  },
+  // Gespeichertes Test-Theme schon im <head> setzen, damit die Seite beim Neuladen nicht kurz im Standard aufblitzt.
+  // Gleiche Logik wie parseThemeStore/pickStyle, nur als ES5-Einzeiler ohne Importe. Wichtig: Wertebereich
+  // (Radius 0–1.5) und Eigenschafts-Prüfung (hasOwnProperty statt `in`, das auch geerbte Object.prototype-Namen
+  // träfe) müssen exakt zu parseThemeStore/pickStyle passen, sonst blitzt genau der Zustand auf, den dieses
+  // Skript verhindern soll.
+  script: [{
+    key: 'themer-restore',
+    innerHTML: `try{var K=${JSON.stringify(dark)},H=Object.prototype.hasOwnProperty,t=JSON.parse(localStorage.getItem('${STORAGE_KEY}')||'{}');if(!t.overrides&&(t.brand||t.signal||t.radius!=null))t={style:'${DEFAULT_STYLE}',overrides:{'${DEFAULT_STYLE}':t}};var q=new URLSearchParams(location.search).get('style'),id=H.call(K,q)?q:(H.call(K,t.style)?t.style:'${DEFAULT_STYLE}'),e=document.documentElement,s=e.style,o=(t.overrides||{})[id]||{},h=/^#[0-9a-f]{6}$/i;e.setAttribute('data-style',id);e.classList.toggle('dark',K[id]);h.test(o.brand)&&s.setProperty('--theme-brand',o.brand);h.test(o.signal)&&s.setProperty('--theme-signal',o.signal);h.test(o.card)&&s.setProperty('--theme-card',o.card);typeof o.radius=='number'&&o.radius>=0&&o.radius<=1.5&&s.setProperty('--radius',o.radius+'rem')}catch(e){}`,
+  }],
+})
 </script>
 
 <template>
@@ -54,11 +51,10 @@ if (showThemer) {
     <SiteFooter />
     <ClientOnly>
       <!--
-        Laufzeit-Schutz. Dass im Build gar kein Chunk entsteht, leistet nicht dieses v-if, sondern der Hook
-        components:extend in nuxt.config.ts: Er nimmt ThemePanel aus der Registrierung. Ohne ihn baut Nuxt den
-        Chunk trotz v-if und lädt ihn per <link rel="prefetch"> vor.
+        Das Panel misst Farben über ein Canvas und liest den localStorage – beides gibt es nur im Browser,
+        deshalb ClientOnly. Lazy: Der Chunk lädt nach dem Seiteninhalt, nicht mit ihm.
       -->
-      <LazyThemePanel v-if="showThemer" />
+      <LazyThemePanel />
     </ClientOnly>
   </div>
 </template>
